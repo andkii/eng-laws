@@ -224,6 +224,7 @@ One-shot scripts (backfills, migrations, data fixes) must let an operator tell a
 - For prod incidents, deliver structural fixes that make the failure impossible, not manual intervention or band-aids.
 - Never skip pre-commit hooks (`--no-verify`) or bypass signing unless the user explicitly requests it.
 - Never use `git revert` — use `git reset` to undo commits.
+- Never amend a commit that is already pushed: make the follow-up a new commit so the push stays a fast-forward. Force-push a feature branch only after a rebase, with `--force-with-lease`.
 - Never push directly to the default branch unless the user explicitly requests it; it otherwise changes only through merged PRs. Never force-push to it.
 
 Enforcement tooling may be stricter than any rule above (for example, a hook that blocks `--no-verify` or any push to the default branch unconditionally). When the user has explicitly requested a blocked action, the user runs the command themselves.
