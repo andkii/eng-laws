@@ -2,7 +2,7 @@
 
 ## 0.1.5
 
-- Delegation law: add "Default to the available delegate" (Codex plugin installed means subagent-type work goes to Codex; `[claude-only: <reason>]` for exceptions).
+- Delegation law: add "Choose the delegate" (Claude or Codex, with a default split; a Claude subagent brief states `[claude: <reason>]` when Codex is installed).
 - `hooks/delegate-codex.py` (new) and an `Agent` matcher in `hooks/hooks.json` enforce it; allows everything when Codex is not installed or on internal error. Tests: `tests/test_delegate_codex.py`.
 
 ## 0.1.4

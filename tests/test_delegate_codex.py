@@ -37,10 +37,10 @@ class DelegateCodex(unittest.TestCase):
             self.assertEqual(run(kind).returncode, 0, kind)
 
     def test_marker_with_reason_allows(self):
-        self.assertEqual(run("Explore", "[claude-only: needs Plane MCP] list tickets").returncode, 0)
+        self.assertEqual(run("Explore", "[claude: needs Plane MCP] list tickets").returncode, 0)
 
     def test_marker_without_reason_does_not_allow(self):
-        self.assertEqual(run("Explore", "[claude-only: ] list").returncode, 2)
+        self.assertEqual(run("Explore", "[claude: ] list").returncode, 2)
 
     def test_allows_when_codex_not_installed(self):
         self.assertEqual(run("Explore", plugins=("caveman@caveman",)).returncode, 0)

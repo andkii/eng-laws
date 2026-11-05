@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""PreToolUse hook for the Agent tool: route subagent work to Codex when the
-Codex plugin is installed (Delegation law, "Default to the available delegate").
+"""PreToolUse hook for the Agent tool: make the Codex-or-Claude choice deliberate
+when the Codex plugin is installed (Delegation law, "Choose the delegate").
 
-Denies (exit 2, reason on stderr) any subagent whose type is not a Codex agent,
-unless the type is in CLAUDE_ONLY, the brief carries the bypass marker, or the
-Codex plugin is not installed. Fails open on any internal error: this is a
-routing policy, not a safety guard.
+Denies (exit 2, reason on stderr) a non-Codex subagent unless the type is in
+CLAUDE_ONLY, the brief carries a reason marker "[claude: <reason>]", or the Codex
+plugin is not installed. Fails open on any internal error: this is a routing
+policy, not a safety guard.
 """
 import json
 import os
@@ -15,7 +15,7 @@ import sys
 # Subagents that need Claude-only capabilities (web fetch, Claude Code docs, status line settings).
 CLAUDE_ONLY = {"web-fetch", "claude-code-guide", "statusline-setup"}
 # A brief containing this marker, with a reason, is let through.
-MARKER = re.compile(r"\[claude-only:\s*\S[^\]]*\]")
+MARKER = re.compile(r"\[claude:\s*\S[^\]]*\]")
 CODEX_PLUGIN_PREFIX = "codex@"
 
 
@@ -46,10 +46,9 @@ def main():
         return 0
     shown = subagent or "(default)"
     print(
-        f"eng-laws: subagent '{shown}' blocked. The Codex plugin is installed, so subagent work "
-        "goes to Codex: use subagent_type 'codex:codex-rescue' (read-only tasks: say so in the brief). "
-        "If the task needs Claude-only tools, put '[claude-only: <reason>]' in the brief. "
-        "See the Delegation law.",
+        f"eng-laws: subagent '{shown}' needs a reason. The Codex plugin is installed: either use "
+        "subagent_type 'codex:codex-rescue' (read-only tasks: say so in the brief), or keep this "
+        "subagent and put '[claude: <reason>]' in the brief. See the Delegation law.",
         file=sys.stderr,
     )
     return 2
