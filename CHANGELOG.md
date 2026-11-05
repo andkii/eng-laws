@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.5
+
+- Delegation law: add "Choose the delegate" (Claude or Codex, with a default split; a Claude subagent brief states `[claude: <reason>]` when Codex is installed).
+- `hooks/delegate-codex.py` (new) and an `Agent` matcher in `hooks/hooks.json` enforce it; allows everything when Codex is not installed or on internal error. Tests: `tests/test_delegate_codex.py`.
+
 ## 0.1.4
 
 Law text only; no hook or agent behavior change. The version bump lets projects pin a tag that includes this change.

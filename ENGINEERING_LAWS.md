@@ -115,6 +115,7 @@ This is the upstream gate for the Declarative Before Imperative law. The abstrac
 
 Work handed to another agent (another vendor's coding agent, a subagent, a background job) falls under the same laws as work done directly. The delegating agent stays responsible for it.
 
+- **Choose the delegate.** Delegate to Claude subagents or to Codex, whichever fits; when the Codex plugin is installed the choice must be stated. Default to Codex for bulk search and investigation, implementation in a worktree, refactors and reviews. Default to Claude for design that needs the session's or ticket's context, work that needs MCP tools, and lookups cheaper than a Codex round trip. A Claude subagent brief carries `[claude: <reason>]`; the plugin's `Agent` hook blocks it otherwise, and exempts web fetch, Claude Code documentation and status line agents. The conditions below apply to every delegation.
 - **Deliver the laws; do not hope for them.** The delegate must load these laws through its own instruction mechanism before it writes code, for example a global instruction file that points at the same pinned laws. Task text alone is not a delivery mechanism. If the delegate cannot load them, it does read-only work only.
 - **Same enforcement, or less access.** Guards that protect the default branch (hooks, git hooks) must apply to the delegate too. "Apply" means tested: attempt a blocked action through the delegate in a scratch repository and observe the block. Until that is shown, give the delegate read-only tasks (review, investigation), not write tasks.
 - **Isolate writes.** Write delegation runs in a worktree on its own branch, started from a session whose working directory is that worktree, because delegates work in the git root of the delegating session's directory. A session in the default-branch checkout cannot delegate writes.
@@ -223,6 +224,7 @@ One-shot scripts (backfills, migrations, data fixes) must let an operator tell a
 - For prod incidents, deliver structural fixes that make the failure impossible, not manual intervention or band-aids.
 - Never skip pre-commit hooks (`--no-verify`) or bypass signing unless the user explicitly requests it.
 - Never use `git revert` — use `git reset` to undo commits.
+- Never amend a commit that is already pushed: make the follow-up a new commit so the push stays a fast-forward. Force-push a feature branch only after a rebase, with `--force-with-lease`.
 - Never push directly to the default branch unless the user explicitly requests it; it otherwise changes only through merged PRs. Never force-push to it.
 
 Enforcement tooling may be stricter than any rule above (for example, a hook that blocks `--no-verify` or any push to the default branch unconditionally). When the user has explicitly requested a blocked action, the user runs the command themselves.

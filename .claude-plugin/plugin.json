@@ -1,6 +1,6 @@
 {
   "name": "eng-laws",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Cross-repo agentic engineering process: enforced git guards and a read-only verifier agent.",
   "author": {
     "name": "andkii"
