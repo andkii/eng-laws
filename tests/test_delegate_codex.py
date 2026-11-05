@@ -29,7 +29,8 @@ class DelegateCodex(unittest.TestCase):
             self.assertIn("codex:codex-rescue", r.stderr)
 
     def test_allows_codex_agent(self):
-        self.assertEqual(run("codex:codex-rescue").returncode, 0)
+        for kind in ("codex:codex-rescue", "codex:other"):
+            self.assertEqual(run(kind).returncode, 0, kind)
 
     def test_allows_claude_only_agents(self):
         for kind in ("web-fetch", "claude-code-guide", "statusline-setup"):
