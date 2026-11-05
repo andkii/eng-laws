@@ -15,7 +15,7 @@ import sys
 # Subagents that need Claude-only capabilities (web fetch, Claude Code docs, status line settings).
 CLAUDE_ONLY = {"web-fetch", "claude-code-guide", "statusline-setup"}
 # A brief containing this marker, with a reason, is let through.
-MARKER = re.compile(r"\[claude:\s*\S[^\]]*\]")
+MARKER = re.compile(r"\[claude:\s*[^\s\]][^\]]*\]")
 CODEX_PLUGIN_PREFIX = "codex@"
 
 

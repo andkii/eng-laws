@@ -42,6 +42,9 @@ class DelegateCodex(unittest.TestCase):
     def test_marker_without_reason_does_not_allow(self):
         self.assertEqual(run("Explore", "[claude: ] list").returncode, 2)
 
+    def test_empty_marker_with_later_brackets_does_not_allow(self):
+        self.assertEqual(run("Explore", "[claude: ] inspect [ticket]").returncode, 2)
+
     def test_allows_when_codex_not_installed(self):
         self.assertEqual(run("Explore", plugins=("caveman@caveman",)).returncode, 0)
 
